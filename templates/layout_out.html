@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Slack {% block title %}{% endblock %}
+  </title>
+  {% block js_import %}{% endblock %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      {% block js_onload %}{% endblock %}
+    })
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="{{url_for('signup')}}">[Sign up]</a>
+    <a class="signin" href="{{url_for('signin')}}">[Sign in]</a>
+    {% block nav %}{% endblock %}
+  </nav>
+  {% block section%}{% endblock %}
+</body>
+</html>

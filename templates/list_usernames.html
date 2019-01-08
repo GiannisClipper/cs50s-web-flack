@@ -1,0 +1,14 @@
+{% extends 'layout_in.html' %}
+
+{% block title %}
+List users
+{% endblock %}
+
+{% block section%}
+<p>Existing usernames:</p>
+<ul>
+  {% for username in usernames %}
+  <li>{{username}}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

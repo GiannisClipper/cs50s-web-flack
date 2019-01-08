@@ -1,0 +1,49 @@
+{% extends 'layout_in.html' %}
+
+{% block title %}
+Channel
+{% endblock %}
+
+{% block js_import %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+{% endblock %}
+
+{% block js_onload_more %}
+  document.querySelector('p.usernameatchannel').innerHTML=curr_username+'@'+curr_channel
+  window.scrollTo(0, document.body.scrollHeight);
+
+  //Connect to websocket
+  var socket=io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+  //When user submit a new edit
+  socket.on('connect', ()=>{
+    document.querySelector('#send').onclick=()=>{
+      if (document.querySelector('#text').value!='') {
+        socket.emit('submit edit', {'channel':curr_channel, 'username':curr_username, 'text':document.querySelector('#text').value});
+        document.querySelector('#text').value='';
+      }
+    }
+  });
+
+  //When a new edit is announced, add to the unordered list
+  //document.querySelector('#edits').innerHTML=`<li>${data.username}: ${data.text}</li>`+document.querySelector('#edits').innerHTML;
+  socket.on('announce edit '+'{{curr_channel}}', data=>{
+    li=document.createElement('li');
+    li.innerHTML=`${data.username}: ${data.text}`;
+    document.querySelector('#edits').append(li);
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+{% endblock %}
+
+{% block section%}
+<p class='usernameatchannel'>username@channel:</p>
+
+<ul id='edits'>
+  {% for edit in edits %}
+  <li>{{edit['username']}}: {{edit['text']}}</li>
+  {% endfor %}
+</ul>
+
+<textarea id="text" rows="4" cols="50"></textarea>
+<button id="send">Send</button>
+{% endblock %}

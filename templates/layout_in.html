@@ -1,0 +1,33 @@
+{% extends 'layout_out.html' %}
+
+{% block js_onload %}
+  curr_username='{{curr_username}}';
+  if (curr_username!='') {
+    localStorage.setItem('curr_username', curr_username);
+    sessionStorage.setItem('curr_username', curr_username);
+  }
+  curr_username=(!curr_username)?sessionStorage.getItem('curr_username'):curr_username;
+  curr_username=(!curr_username)?localStorage.getItem('curr_username'):curr_username;
+
+  if (!curr_username)
+    document.querySelector('.signin').click();
+
+  curr_channel='{{curr_channel}}';
+  if (curr_channel!='') {
+    localStorage.setItem('curr_channel', curr_channel);
+    sessionStorage.setItem('curr_channel', curr_channel);
+  }
+  curr_channel=(!curr_username)?sessionStorage.getItem('curr_channel'):curr_channel;
+  curr_channel=(!curr_username)?localStorage.getItem('curr_channel'):curr_channel;
+
+  {% block js_onload_more %}
+  {% endblock %}
+
+  document.querySelector('.signout_username').innerHTML=curr_username;
+{% endblock %}
+
+{% block nav %}
+  <a href="{{url_for('signout')}}">[Sign out <span class='signout_username'></span>]</a>
+  <a href="{{url_for('list_usernames')}}">[List usernames]</a>
+  <a href="{{url_for('list_channels')}}">[List channels]</a>
+{% endblock %}

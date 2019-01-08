@@ -1,0 +1,27 @@
+{% extends 'layout_out.html' %}
+
+{% block title %}
+Connecting...
+{% endblock %}
+
+{% block js_onload %}
+  curr_username=sessionStorage.getItem('curr_username');
+  curr_username=(!curr_username)?localStorage.getItem('curr_username'):curr_username;
+  curr_channel=sessionStorage.getItem('curr_channel');
+  curr_channel=(!curr_channel)?localStorage.getItem('curr_channel'):curr_channel;
+
+  document.querySelector('body').innerHTML+='<a hidden class="signin" href="signin"></a>';
+  if (!curr_username) {
+    document.querySelector('.signin').click();
+  } else if (!curr_channel) {
+    document.querySelector('.signin').href='signin_auto?curr_username='+curr_username;
+    document.querySelector('.signin').click();
+  } else {
+    document.querySelector('.signin').href='signin_auto?curr_username='+curr_username+'&curr_channel='+curr_channel;
+    document.querySelector('.signin').click();
+  }
+{% endblock %}
+
+{% block section %}
+<p>Connecting...</p>
+{% endblock %}

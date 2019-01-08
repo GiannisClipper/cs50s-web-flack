@@ -1,0 +1,16 @@
+{% extends 'layout_out.html' %}
+
+{% block title %}
+Sign out
+{% endblock %}
+
+{% block js_onload %}
+  localStorage.setItem('curr_username', '');
+  sessionStorage.setItem('curr_username', '');
+  localStorage.setItem('curr_channel', '');
+  sessionStorage.setItem('curr_channel', '');
+{% endblock %}
+
+{% block section%}
+<p>Goddbye!</p>
+{% endblock %}
